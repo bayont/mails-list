@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { mailData } from "../../mailData";
 import { Link } from "react-router-dom";
