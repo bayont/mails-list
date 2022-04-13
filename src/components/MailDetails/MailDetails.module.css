@@ -1,0 +1,14 @@
+.mailDetails {
+  text-align: center;
+  width: 100%;
+}
+
+.backButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  text-decoration: underline;
+}
+.backButton a:hover {
+  color: rgb(57, 139, 233);
+}

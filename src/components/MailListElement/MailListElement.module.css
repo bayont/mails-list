@@ -1,0 +1,95 @@
+.flexRow {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+  transition: all ease-in 0.2s;
+  background-color: #efefef;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+.flexRow.unread {
+  background-color: #fff;
+}
+.flexRow.unread .subject {
+  font-weight: bold;
+}
+
+.flexRow:hover {
+  background-color: #dfdfdf;
+}
+
+.headerRow {
+  font-weight: bold;
+  font-size: large;
+}
+
+.flexTable {
+  max-width: 80%;
+  background-color: #fafafa;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px 2px #eee;
+}
+
+.flexContent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.headerRow {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+}
+
+.widthFull {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.cb-spacer {
+  width: 50px;
+}
+
+.cb {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexInner {
+  display: flex;
+  justify-content: left;
+}
+
+.from {
+  width: 300px;
+  margin-right: 100px;
+}
+
+.subject {
+  font-weight: 400;
+}
+.snippet {
+  font-weight: 300;
+  color: #444;
+}
+.checkbox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.checkbox > label {
+  font-size: 10px;
+  text-align: center;
+  display: block;
+}

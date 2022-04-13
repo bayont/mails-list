@@ -7,7 +7,7 @@ export type Mail = {
   snippet: string;
 };
 
-const data: Mail[] = [
+export const mailData: Mail[] = [
   {
     id: 100795229,
 
@@ -36,5 +36,3 @@ const data: Mail[] = [
     snippet: "Odbierz 50% rabatu na wymianę online",
   },
 ];
-
-export default data;
