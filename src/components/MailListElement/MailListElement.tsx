@@ -1,7 +1,6 @@
 import classNames from "classnames";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Mail, mailData } from "../../mailData";
+import { Mail } from "../../mailData";
 import styles from "./MailListElement.module.css";
 
 type Props = {
@@ -49,7 +48,7 @@ export function MailListElement({
             <div className={styles.item}>
               <span className={styles.subject}>{mail.subject}</span>
               <span className={styles.snippet}>
-                {mail.snippet == "" ? "" : ` - ${mail.snippet}`}
+                {mail.snippet === "" ? "" : ` - ${mail.snippet}`}
               </span>
             </div>
           </div>
