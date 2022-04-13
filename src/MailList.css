@@ -1,0 +1,21 @@
+.flexRow {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.headerRow {
+  font-weight: bold;
+  font-size: large;
+}
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+.flexTable {
+  width: 80%;
+  background-color: #ccc;
+  margin: 0 auto;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
