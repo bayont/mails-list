@@ -31,6 +31,10 @@ export function MailList() {
   return (
     <>
       <h1>Mails list</h1>
+      <h2>
+        Already read: {mails.filter((m) => m.is_unread == false).length}/
+        {mails.length}
+      </h2>
       <div className={styles.flexTable}>
         <ul>
           {mails.map((mail) => {
