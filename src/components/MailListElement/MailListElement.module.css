@@ -3,7 +3,7 @@
   justify-content: space-between;
   border-bottom: 1px solid #ccc;
   padding: 15px;
-  transition: all ease-in 0.2s, background-position ease-in-out 1s;
+  transition: all ease-in 0.3s, background-position ease-in-out 1s;
   background-position: 0;
   background: linear-gradient(
     90deg,
@@ -15,6 +15,7 @@
   background-size: 200% 200%;
   border-radius: 6px;
   margin: 10px 0;
+  font-size: 13px;
 }
 
 .flexRow.unread {
@@ -25,7 +26,8 @@
 }
 
 .flexRow:hover {
-  background-color: #dfdfdf;
+  background-position: 50%;
+  filter: brightness(0.9);
 }
 
 .headerRow {
@@ -48,6 +50,10 @@
   width: 100%;
   display: flex;
   align-items: center;
+}
+
+.button {
+  cursor: pointer;
 }
 
 .cb-spacer {

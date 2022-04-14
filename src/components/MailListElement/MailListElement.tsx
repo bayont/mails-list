@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Mail } from "../../mailData";
 import { Checkbox } from "../Checkbox/Checkbox";
 import styles from "./MailListElement.module.css";
@@ -51,6 +51,8 @@ export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
   const liClasses = mail.is_unread
     ? classNames(styles.flexRow, styles.unread)
     : styles.flexRow;
+  const navigate = useNavigate();
+
   return (
     <li className={liClasses}>
       <div className={classNames(styles.column, styles.cbWrapper)}>
@@ -61,11 +63,13 @@ export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
           toggleIsRead={toggleIsRead}
         />
       </div>
-      <Link
-        to={`mails/${mail.id}`}
+      <div
         key={`${mail.id}`}
-        onClick={() => toggleIsRead(mail.id, true)}
-        className={styles.widthFull}
+        onClick={async () => {
+          await toggleIsRead(mail.id, true);
+          navigate(`mails/${mail.id}`);
+        }}
+        className={classNames(styles.widthFull, styles.button)}
       >
         <div className={styles.flexContent}>
           <div className={styles.flexInner}>
@@ -86,7 +90,7 @@ export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     </li>
   );
 }

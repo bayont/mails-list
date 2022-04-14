@@ -1,6 +1,5 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { mailData } from "../../mailData";
-import { Link } from "react-router-dom";
 import styles from "./MailDetails.module.css";
 
 export function MailDetails() {
