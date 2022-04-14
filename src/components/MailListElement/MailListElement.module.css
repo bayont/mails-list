@@ -25,16 +25,6 @@
   font-size: large;
 }
 
-.flexTable {
-  max-width: 80%;
-  background-color: #fafafa;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 2px 5px 2px #eee;
-}
-
 .flexContent {
   width: 100%;
   display: flex;
@@ -56,7 +46,7 @@
   width: 50px;
 }
 
-.cb {
+.cbWrapper {
   width: 50px;
   display: flex;
   justify-content: center;
@@ -69,8 +59,11 @@
 }
 
 .from {
-  width: 300px;
+  min-width: 300px;
   margin-right: 100px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .subject {
@@ -92,4 +85,13 @@
   font-size: 10px;
   text-align: center;
   display: block;
+}
+.date {
+  text-align: right;
+}
+
+@media screen and (min-width: 800px) {
+  .flexTable {
+    width: 100%;
+  }
 }

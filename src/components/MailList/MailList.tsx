@@ -32,7 +32,7 @@ export function MailList() {
     <>
       <h1>Mails list</h1>
       <h2>
-        Already read: {mails.filter((m) => m.is_unread == false).length}/
+        Already read: {mails.filter((m) => m.is_unread === false).length}/
         {mails.length}
       </h2>
       <div className={styles.flexTable}>
@@ -40,6 +40,7 @@ export function MailList() {
           {mails.map((mail) => {
             return (
               <MailListElement
+                key={`${mail.id}`}
                 markAsRead={markAsRead}
                 toggleIsRead={toggleIsRead}
                 isChecked={!mail.is_unread}

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import { Mail } from "../../mailData";
+import { Checkbox } from "../Checkbox/Checkbox";
 import styles from "./MailListElement.module.css";
 
 type Props = {
@@ -20,19 +21,13 @@ export function MailListElement({
     : styles.flexRow;
   return (
     <li className={liClasses}>
-      <div className={classNames(styles.column, styles.cb)}>
-        <div className={styles.checkbox}>
-          <label htmlFor={`${mail.id}`}>
-            {mail.is_unread ? "Unr" : "R"}ead
-          </label>
-          <input
-            type="checkbox"
-            checked={isChecked}
-            onClick={() => toggleIsRead(mail.id)}
-            name={`${mail.id}`}
-            id={`${mail.id}`}
-          />
-        </div>
+      <div className={classNames(styles.column, styles.cbWrapper)}>
+        <Checkbox
+          isChecked={isChecked}
+          mIsUnRead={mail.is_unread}
+          mId={mail.id}
+          toggleIsRead={toggleIsRead}
+        />
       </div>
       <Link
         to={`mails/${mail.id}`}
