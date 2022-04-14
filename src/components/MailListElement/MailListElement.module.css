@@ -3,14 +3,22 @@
   justify-content: space-between;
   border-bottom: 1px solid #ccc;
   padding: 15px;
-  transition: all ease-in 0.2s;
-  background-color: #efefef;
+  transition: all ease-in 0.2s, background-position ease-in-out 1s;
+  background-position: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 60%,
+    rgba(240, 249, 255, 1) 90%,
+    rgba(238, 247, 255, 1) 100%
+  );
+  background-size: 200% 200%;
   border-radius: 6px;
   margin: 10px 0;
 }
 
 .flexRow.unread {
-  background-color: #fff;
+  background-position: 100%;
 }
 .flexRow.unread .subject {
   font-weight: bold;
@@ -68,6 +76,7 @@
 
 .subject {
   font-weight: 400;
+  margin-right: 5px;
 }
 .snippet {
   font-weight: 300;
@@ -89,6 +98,26 @@
 .date {
   text-align: right;
   font-size: small;
+  position: relative;
+}
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.hintFullDate {
+  position: absolute;
+  right: 0;
+  bottom: -15px;
+  font-size: smaller;
+  color: #999;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+  width: 120%;
+}
+
+.date:hover .hintFullDate {
+  opacity: 1;
 }
 
 @media screen and (min-width: 800px) {

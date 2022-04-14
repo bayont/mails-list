@@ -18,42 +18,36 @@ function processDate(date: string): string {
           const minutesDiff = hoursDiff / 60;
           if (minutesDiff < 1)
             return `${Math.round(minutesDiff / 60)} second${
-              Math.round(minutesDiff / 60) == 1.0 ? "" : "s"
+              Math.round(minutesDiff / 60) === 1.0 ? "" : "s"
             } ago`;
           else
             return `${Math.round(minutesDiff)} minute${
-              Math.round(minutesDiff) == 1.0 ? "" : "s"
+              Math.round(minutesDiff) === 1.0 ? "" : "s"
             } ago`;
         } else
           return `${Math.round(hoursDiff)} hour${
-            Math.round(hoursDiff) == 1.0 ? "" : "s"
+            Math.round(hoursDiff) === 1.0 ? "" : "s"
           } ago`;
       } else
         return `${Math.round(daysDiff)} day${
-          Math.round(daysDiff) == 1.0 ? "" : "s"
+          Math.round(daysDiff) === 1.0 ? "" : "s"
         } ago`;
     } else
       return `${Math.round(monthsDiff)} month${
-        Math.round(monthsDiff) == 1.0 ? "" : "s"
+        Math.round(monthsDiff) === 1.0 ? "" : "s"
       } ago`;
   } else
     return `${Math.round(yearsDiff)} year${
-      Math.round(yearsDiff) == 1.0 ? "" : "s"
+      Math.round(yearsDiff) === 1.0 ? "" : "s"
     } ago`;
 }
 
 type Props = {
   mail: Mail;
   isChecked: boolean;
-  markAsRead: Function;
   toggleIsRead: Function;
 };
-export function MailListElement({
-  mail,
-  isChecked,
-  markAsRead,
-  toggleIsRead,
-}: Props) {
+export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
   const liClasses = mail.is_unread
     ? classNames(styles.flexRow, styles.unread)
     : styles.flexRow;
@@ -70,7 +64,7 @@ export function MailListElement({
       <Link
         to={`mails/${mail.id}`}
         key={`${mail.id}`}
-        onClick={() => markAsRead(mail.id)}
+        onClick={() => toggleIsRead(mail.id, true)}
         className={styles.widthFull}
       >
         <div className={styles.flexContent}>
@@ -87,6 +81,9 @@ export function MailListElement({
           </div>
           <div className={classNames(styles.item, styles.date)}>
             {processDate(mail.sent_date)}
+            <div className={styles.hintFullDate}>
+              {new Date(mail.sent_date).toLocaleString().slice(0, -3)}
+            </div>
           </div>
         </div>
       </Link>

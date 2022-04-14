@@ -6,27 +6,18 @@ import { useState } from "react";
 export function MailList() {
   const [mails, setMails] = useState(mailData);
 
-  const markAsRead = (id: number) => {
+  function toggleIsRead(id: number, mark?: boolean) {
     const clickedElementIndex = mails.findIndex((mail) => mail.id === id);
+    console.log("I'm toggleIsRead!");
     setMails((old) => {
+      console.log("I'm setMails!");
       const clickedElement = old[clickedElementIndex];
-      clickedElement.is_unread = false;
+      clickedElement.is_unread = mark ? false : !clickedElement.is_unread;
       const newItems = [...old];
       newItems.splice(clickedElementIndex, 1, clickedElement);
       return newItems;
     });
-  };
-
-  const toggleIsRead = (id: number) => {
-    const clickedElementIndex = mails.findIndex((mail) => mail.id === id);
-    setMails((old) => {
-      const clickedElement = old[clickedElementIndex];
-      clickedElement.is_unread = !clickedElement.is_unread;
-      const newItems = [...old];
-      newItems.splice(clickedElementIndex, 1, clickedElement);
-      return newItems;
-    });
-  };
+  }
 
   return (
     <>
@@ -41,7 +32,6 @@ export function MailList() {
             return (
               <MailListElement
                 key={`${mail.id}`}
-                markAsRead={markAsRead}
                 toggleIsRead={toggleIsRead}
                 isChecked={!mail.is_unread}
                 mail={mail}
