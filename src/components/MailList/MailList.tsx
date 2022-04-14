@@ -1,9 +1,15 @@
-import { mailData } from "../../mailData";
+import { Mail, mailData } from "../../mailData";
 import { MailListElement } from "../MailListElement/MailListElement";
 import styles from "./MailList.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export function MailList() {
-  const [mails, setMails] = useState(mailData);
+  const dateComparer = (m1: Mail, m2: Mail) => {
+    const date1 = new Date(m1.sent_date).getTime();
+    const date2 = new Date(m2.sent_date).getTime();
+    return date2 - date1;
+  };
+  const [mails, setMails] = useState(mailData.sort(dateComparer));
+  useEffect(() => {}, []);
 
   function toggleIsRead(id: number, mark?: boolean) {
     const clickedElementIndex = mails.findIndex((mail) => mail.id === id);

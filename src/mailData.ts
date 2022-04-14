@@ -35,4 +35,17 @@ export const mailData: Mail[] = [
 
     snippet: "Odbierz 50% rabatu na wymianę online",
   },
+  {
+    id: 100795228,
+
+    from: "Lorem Company - lorem@ipsum.pl",
+
+    sent_date: "2022-04-11 12:21:13",
+
+    is_unread: false,
+
+    subject: "Potrzebujesz więcej danych do aplikacji?",
+
+    snippet: "Sprawdź naszą ofertę",
+  },
 ];
