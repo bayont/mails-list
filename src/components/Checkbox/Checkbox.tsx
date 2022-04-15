@@ -15,6 +15,7 @@ export function Checkbox({ isChecked, mId, mIsUnRead, toggleIsRead }: Props) {
       <input
         type="checkbox"
         onChange={() => toggleIsRead(mId)}
+        onClick={(e) => e.stopPropagation()}
         checked={isChecked}
         name={id}
         id={id}

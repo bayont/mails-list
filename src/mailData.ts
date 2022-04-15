@@ -42,7 +42,7 @@ export const mailData: Mail[] = [
 
     sent_date: "2022-04-11 12:21:13",
 
-    is_unread: false,
+    is_unread: true,
 
     subject: "Potrzebujesz więcej danych do aplikacji?",
 
