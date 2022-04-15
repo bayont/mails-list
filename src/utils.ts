@@ -9,10 +9,10 @@ export function processDate(date: string): string {
       if (daysDiff < 1) {
         const hoursDiff = daysDiff * 24;
         if (hoursDiff < 1) {
-          const minutesDiff = hoursDiff / 60;
+          const minutesDiff = hoursDiff * 60;
           if (minutesDiff < 1)
-            return `${Math.round(minutesDiff / 60)} second${
-              Math.round(minutesDiff / 60) === 1.0 ? "" : "s"
+            return `${Math.round(minutesDiff * 60)} second${
+              Math.round(minutesDiff * 60) === 1.0 ? "" : "s"
             } ago`;
           else
             return `${Math.round(minutesDiff)} minute${
