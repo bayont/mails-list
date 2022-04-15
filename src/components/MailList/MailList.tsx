@@ -2,6 +2,8 @@ import { Mail, mailData } from "../../mailData";
 import { MailListElement } from "../MailListElement/MailListElement";
 import styles from "./MailList.module.css";
 import { useEffect, useState } from "react";
+import classNames from "classnames";
+import { Logo } from "../Logo/Logo";
 export function MailList() {
   const dateComparer = (m1: Mail, m2: Mail) => {
     const date1 = new Date(m1.sent_date).getTime();
@@ -27,7 +29,9 @@ export function MailList() {
 
   return (
     <>
-      <h1>Mails list</h1>
+      <header>
+        <Logo />
+      </header>
       <h2>
         Already read: {mails.filter((m) => m.is_unread === false).length}/
         {mails.length}

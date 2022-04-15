@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { mailData } from "../../mailData";
+import { Logo } from "../Logo/Logo";
 import styles from "./MailDetails.module.css";
 
 export function MailDetails() {
@@ -15,6 +16,9 @@ export function MailDetails() {
 
   return (
     <>
+      <header>
+        <Logo />
+      </header>
       <div className={styles.backButton}>
         <Link to={"/"}>Go back to list</Link>
       </div>

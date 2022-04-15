@@ -26,14 +26,6 @@ export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
         navigate(`mails/${mail.id}`);
       }}
     >
-      <div className={classNames(styles.column, styles.cbWrapper)}>
-        <Checkbox
-          isChecked={isChecked}
-          mIsUnRead={mail.is_unread}
-          mId={mail.id}
-          toggleIsRead={toggleIsRead}
-        />
-      </div>
       <div key={`${mail.id}`} className={classNames(styles.widthFull)}>
         <div className={styles.flexContent}>
           <div className={styles.flexInner}>
@@ -54,6 +46,14 @@ export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
             </div>
           </div>
         </div>
+      </div>
+      <div className={classNames(styles.column, styles.cbWrapper)}>
+        <Checkbox
+          isChecked={isChecked}
+          mIsUnRead={mail.is_unread}
+          mId={mail.id}
+          toggleIsRead={toggleIsRead}
+        />
       </div>
     </li>
   );

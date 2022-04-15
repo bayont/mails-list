@@ -8,7 +8,7 @@
   box-shadow: 0 2px 5px 2px #eee;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
   .flexTable {
     width: 100%;
     padding: 0;
