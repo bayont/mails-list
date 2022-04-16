@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Mail } from "../../mailData";
 import { Checkbox } from "../Checkbox/Checkbox";
 import styles from "./MailListElement.module.css";
-import { processDate } from "../../utils";
+import { processDate } from "../../utils/dates";
 
 type Props = {
   mail: Mail;
