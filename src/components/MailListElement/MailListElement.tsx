@@ -40,7 +40,7 @@ export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
             </div>
           </div>
           <div className={classNames(styles.item, styles.date)}>
-            {processDate(mail.sent_date)}
+            <div>{processDate(mail.sent_date)}</div>
             <div className={styles.hintFullDate}>
               {new Date(mail.sent_date).toLocaleString().slice(0, -3)}
             </div>

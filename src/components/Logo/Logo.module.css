@@ -3,10 +3,11 @@
   justify-content: center;
   margin-top: 1em;
   position: relative;
+  user-select: none;
 }
 .inboxInner {
   position: absolute;
-  font-size: 18px;
+  font-size: 14px;
   letter-spacing: 2px;
   top: 35%;
   left: calc(50% + 1px);
@@ -21,6 +22,6 @@
 }
 .inboxIcon {
   color: rgb(11, 158, 255);
-  font-size: 128px;
+  font-size: 96px;
   display: block;
 }

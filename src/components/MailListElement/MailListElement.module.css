@@ -73,7 +73,8 @@
 }
 
 .from {
-  min-width: 300px;
+  min-width: 200px;
+  max-width: 200px;
   margin-right: 100px;
   display: flex;
   justify-content: flex-start;
@@ -101,15 +102,17 @@
   text-align: center;
   display: block;
 }
-.date {
-  text-align: right;
-  font-size: small;
-  position: relative;
-}
 .item {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.date {
+  font-size: small;
+  position: relative;
+  justify-content: flex-end;
+  min-width: 120px;
 }
 .hintFullDate {
   position: absolute;

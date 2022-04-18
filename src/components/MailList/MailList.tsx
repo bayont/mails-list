@@ -1,8 +1,7 @@
 import { Mail, mailData } from "../../mailData";
 import { MailListElement } from "../MailListElement/MailListElement";
 import styles from "./MailList.module.css";
-import { useEffect, useState } from "react";
-import classNames from "classnames";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "../Logo/Logo";
 import { createPages } from "../../utils/pages";
 import { Pagination } from "../Pagination/Pagination";
@@ -15,7 +14,7 @@ export function MailList() {
   };
 
   const [mails, setMails] = useState(mailData.sort(dateComparer));
-  const [mailsPerPage, setMailsPerPage] = useState(5);
+  const [mailsPerPage, setMailsPerPage] = useState(10);
 
   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
     if (mails.length > mailsPerPage) {
@@ -41,6 +40,7 @@ export function MailList() {
 
   function changePage(pageIndex: number) {
     setCurrentPage(pageIndex);
+    list.current?.scrollTo({ top: 0 });
   }
 
   function toggleIsRead(id: number, mark?: boolean) {
@@ -57,18 +57,34 @@ export function MailList() {
     });
   }
   const page = pages[currentPage];
+  const unreadCount = mails.filter((m) => m.is_unread === true).length;
+
+  const list = useRef<HTMLUListElement>(null);
 
   return (
     <>
       <header>
         <Logo />
       </header>
-      <h2>
-        Already read: {mails.filter((m) => m.is_unread === false).length}/
-        {mails.length}
-      </h2>
       <div className={styles.flexTable}>
-        <ul>
+        <div className={styles.topBar}>
+          <div
+            className={styles.newMessages}
+            onClick={() => {
+              mails.map((m) => toggleIsRead(m.id, true));
+            }}
+          >
+            {unreadCount} unread mail{unreadCount !== 1 ? "s" : ""}
+          </div>
+          <div className={styles.shownMessageCount}>
+            {(currentPage + 1) * mailsPerPage + 1 - mailsPerPage}-
+            {(currentPage + 1) * mailsPerPage > mails.length
+              ? mails.length
+              : (currentPage + 1) * mailsPerPage}{" "}
+            of {mails.length}
+          </div>
+        </div>
+        <ul ref={list} className={styles.list}>
           {page.map((mail) => {
             return (
               <MailListElement
