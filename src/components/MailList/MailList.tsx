@@ -14,7 +14,10 @@ export function MailList() {
     return date2 - date1;
   };
 
-  const [mails, setMails] = useState(mailData.sort(dateComparer));
+  function getAllMails() {
+    return mailData.sort(dateComparer);
+  }
+  const [mails, setMails] = useState(getAllMails());
   const [mailsPerPage, setMailsPerPage] = useState(10);
 
   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
@@ -61,6 +64,20 @@ export function MailList() {
       res(true);
     });
   }
+  function findMails(searchQuery: string) {
+    setMails(() => {
+      return searchQuery === ""
+        ? getAllMails()
+        : getAllMails().filter((m) =>
+            new RegExp(`\\W${searchQuery}\\W`, "i").test(m.subject + m.snippet)
+          );
+    });
+  }
+  let timeout: NodeJS.Timeout = setTimeout(() => {}, 1000);
+  function onSearchInputChange(searchQuery: string) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => findMails(searchQuery), 100);
+  }
   const page = pages[currentPage];
   const unreadCount = mails.filter((m) => m.is_unread === true).length;
 
@@ -80,6 +97,15 @@ export function MailList() {
             }}
           >
             {unreadCount} unread mail{unreadCount !== 1 ? "s" : ""}
+          </div>
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              className={styles.searchInput}
+              onChange={(e) => {
+                onSearchInputChange(e.target.value);
+              }}
+            />
           </div>
           <div className={styles.shownMessageCount}>
             {(currentPage + 1) * mailsPerPage + 1 - mailsPerPage}-
