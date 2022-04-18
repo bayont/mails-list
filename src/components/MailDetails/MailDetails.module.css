@@ -8,7 +8,8 @@
   top: 10px;
   left: 10px;
   text-decoration: underline;
+  cursor: pointer;
 }
-.backButton a:hover {
+.backButton:hover {
   color: rgb(57, 139, 233);
 }

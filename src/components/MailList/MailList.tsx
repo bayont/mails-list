@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Logo } from "../Logo/Logo";
 import { createPages } from "../../utils/pages";
 import { Pagination } from "../Pagination/Pagination";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function MailList() {
   const dateComparer = (m1: Mail, m2: Mail) => {
@@ -36,11 +37,15 @@ export function MailList() {
     setPages(createPages(mails, mailsPerPage));
   }, [mails, mailsPerPage]);
 
-  const [currentPage, setCurrentPage] = useState(0);
+  const navigate = useNavigate();
+  const { pageId } = useParams();
+  const currentPage =
+    pageId == null || isNaN(parseInt(pageId)) || parseInt(pageId) > pages.length
+      ? 0
+      : parseInt(pageId) - 1;
 
   function changePage(pageIndex: number) {
-    setCurrentPage(pageIndex);
-    list.current?.scrollTo({ top: 0 });
+    navigate(`/pages/${pageIndex + 1}`);
   }
 
   function toggleIsRead(id: number, mark?: boolean) {

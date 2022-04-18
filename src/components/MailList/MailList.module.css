@@ -10,6 +10,7 @@
 
 .list {
   max-height: 60vh;
+  min-height: 300px;
   overflow: auto;
 }
 
@@ -26,12 +27,17 @@
   border: 1px solid #ccc;
   border-radius: 50px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 .newMessages:hover {
   background-color: rgb(11, 158, 255);
   border-color: rgb(11, 158, 255);
   color: white;
 }
+.newMessages:active {
+  background-color: rgb(156, 214, 252);
+}
+
 .newMessages::after {
   opacity: 0;
   content: "Mark all as unread";

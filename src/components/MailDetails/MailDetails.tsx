@@ -1,10 +1,11 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { mailData } from "../../mailData";
 import { Logo } from "../Logo/Logo";
 import styles from "./MailDetails.module.css";
 
 export function MailDetails() {
   const { mailId } = useParams();
+  const navigate = useNavigate();
   if (mailId === undefined || mailId === "") {
     return <>Mail undefined!</>;
   }
@@ -20,7 +21,13 @@ export function MailDetails() {
         <Logo />
       </header>
       <div className={styles.backButton}>
-        <Link to={"/"}>Go back to list</Link>
+        <div
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Back to list
+        </div>
       </div>
       <h1>Mail Details</h1>
       <div className={styles.mailDetails}>

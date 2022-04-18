@@ -10,7 +10,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<MailList />}></Route>
+        <Route path="/" element={<MailList />}>
+          <Route path="/pages/:pageId" element={<MailList />}></Route>
+        </Route>
         <Route path="/mails/:mailId" element={<MailDetails />} />
       </Routes>
     </div>
