@@ -58,6 +58,14 @@ export function MailList() {
       res(true);
     });
   }
+  function markAllMailsAsRead() {
+    setMails((m) =>
+      m.map((mail) => {
+        mail.is_unread = false;
+        return mail;
+      })
+    );
+  }
   function findMails(searchQuery: string) {
     setMails(() => {
       return searchQuery === ""
@@ -83,12 +91,7 @@ export function MailList() {
       </header>
       <div className={styles.flexTable}>
         <div className={styles.topBar}>
-          <button
-            className={styles.newMessages}
-            onClick={() => {
-              mails.map((m) => toggleIsRead(m.id, true));
-            }}
-          >
+          <button className={styles.newMessages} onClick={markAllMailsAsRead}>
             {unreadCount} unread mail{unreadCount !== 1 ? "s" : ""}
           </button>
 
