@@ -22,7 +22,7 @@ export function Checkbox({ isChecked, mId, mIsUnRead, toggleIsRead }: Props) {
         className={styles.cb}
       />
       <span className={classNames(`material-icons`, styles.icon)}>
-        {mIsUnRead ? "mark_email_read" : "markunread"}
+        {!mIsUnRead ? "mark_email_read" : "markunread"}
       </span>
       <div className={styles.hint}>
         <div className={styles.arrow}></div>
