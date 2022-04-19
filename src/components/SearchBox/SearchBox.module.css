@@ -33,14 +33,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 13px;
-  height: 13px;
+  width: 16px;
+  height: 16px;
   padding: 0;
   text-align: center;
   background-color: #888;
   border-radius: 50%;
-  color: #aaa;
+  color: #ccc;
   margin: 2px;
+}
+.clearInput:hover {
+  background-color: #aaa;
 }
 .clearInput > span {
   font-size: 12px;
@@ -55,6 +58,7 @@
   color: #aaa;
   cursor: default;
 }
+
 .searchIcon > span {
   font-size: 16px;
 }
