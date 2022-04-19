@@ -80,7 +80,7 @@ export function MailList() {
   }
 
   const page = pages[currentPage];
-  const unreadCount = mails.filter((m) => m.is_unread === true).length;
+  const unreadCount = mails.filter((m) => m.is_unread).length;
 
   const list = useRef<HTMLUListElement>(null);
 
