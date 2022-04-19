@@ -7,19 +7,11 @@ import { createPages } from "../../utils/pages";
 import { Pagination } from "../Pagination/Pagination";
 import { useNavigate, useParams } from "react-router-dom";
 import { SearchBox } from "../SearchBox/SearchBox";
+import { getAllMails } from "../../utils/mails";
 
 export function MailList() {
-  const dateComparer = (m1: Mail, m2: Mail) => {
-    const date1 = new Date(m1.sent_date).getTime();
-    const date2 = new Date(m2.sent_date).getTime();
-    return date2 - date1;
-  };
   const [mails, setMails] = useState(getAllMails());
   const [mailsPerPage, setMailsPerPage] = useState(10);
-
-  function getAllMails() {
-    return mailData.sort(dateComparer);
-  }
 
   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
     return mails.length > mailsPerPage;
