@@ -22,15 +22,11 @@ export function MailList() {
   }
 
   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
-    if (mails.length > mailsPerPage) {
-      return true;
-    } else return false;
+    return mails.length > mailsPerPage;
   });
 
   useEffect(() => {
-    if (mails.length > mailsPerPage) {
-      setIsPaginationNeeded(true);
-    } else setIsPaginationNeeded(false);
+    setIsPaginationNeeded(mails.length > mailsPerPage);
   }, [mails, mailsPerPage]);
 
   const [pages, setPages] = useState<Mail[][]>(
