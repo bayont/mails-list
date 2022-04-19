@@ -60,7 +60,7 @@ export function MailList() {
   }
   function findMails(searchQuery: string) {
     setMails(() => {
-      return searchQuery === ""
+      return searchQuery
         ? getAllMails()
         : getAllMails().filter((m) => {
             return new RegExp(`${searchQuery}`, "i").test(

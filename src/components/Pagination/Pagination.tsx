@@ -37,6 +37,7 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
     currentPage - max / 2 > 0 ? Math.ceil(currentPage - max / 2) : 0;
   const rightIndex = leftIndex + max;
   const midPages = pages.slice(leftIndex, rightIndex);
+
   return (
     <>
       <ul className={styles.pages}>
@@ -45,11 +46,7 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
             <li className={styles.page} key={0} onClick={() => changePage(0)}>
               <button>1</button>
             </li>
-            {leftIndex === 1 ? null : (
-              <li key="separatorStart" className={styles.separator}>
-                ...
-              </li>
-            )}
+            {leftIndex !== 1 && <li className={styles.separator}>...</li>}
           </>
         ) : null}
         {midPages.map((page, j) => {
@@ -69,10 +66,8 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
         })}
         {rightIndex < pages.length ? (
           <>
-            {rightIndex + 1 === pages.length ? null : (
-              <li key="separatorEnd" className={styles.separator}>
-                ...
-              </li>
+            {rightIndex + 1 !== pages.length && (
+              <li className={styles.separator}>...</li>
             )}
             <li
               className={styles.page}

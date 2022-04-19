@@ -36,7 +36,7 @@ export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
               <div className={styles.item}>
                 <span className={styles.subject}>{mail.subject}</span>
                 <span className={styles.snippet}>
-                  {mail.snippet === "" ? "" : ` - ${mail.snippet}`}
+                  {mail.snippet && ` - ${mail.snippet}`}
                 </span>
               </div>
             </div>
