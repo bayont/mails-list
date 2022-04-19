@@ -27,15 +27,12 @@ export function MailList() {
 
   useEffect(() => {
     setIsPaginationNeeded(mails.length > mailsPerPage);
+    setPages(createPages(mails, mailsPerPage));
   }, [mails, mailsPerPage]);
 
   const [pages, setPages] = useState<Mail[][]>(
     createPages(mails, mailsPerPage)
   );
-
-  useEffect(() => {
-    setPages(createPages(mails, mailsPerPage));
-  }, [mails, mailsPerPage]);
 
   const navigate = useNavigate();
   const { pageId } = useParams();
