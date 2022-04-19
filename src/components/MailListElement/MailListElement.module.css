@@ -1,6 +1,7 @@
 .flexRow {
   display: flex;
   justify-content: space-between;
+  border: none;
   border-bottom: 1px solid #ccc;
   padding: 15px;
   transition: all ease-in 0.3s, background-position ease-in-out 0.5s;
@@ -16,6 +17,8 @@
   border-radius: 6px;
   margin: 10px 0;
   font-size: 13px;
+  text-align: left;
+  align-items: center;
 }
 
 .flexRow.unread {
@@ -54,6 +57,7 @@
 
 .button {
   cursor: pointer;
+  width: 100%;
 }
 
 .cb-spacer {
@@ -126,6 +130,10 @@
 }
 
 .date:hover .hintFullDate {
+  opacity: 1;
+}
+
+.flexRow:focus .hintFullDate {
   opacity: 1;
 }
 

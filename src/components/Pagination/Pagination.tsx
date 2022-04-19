@@ -15,15 +15,16 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
         <ul className={styles.pages}>
           {pages.map((page, i) => {
             return (
-              <li
-                onClick={() => changePage(i)}
-                className={classNames(
-                  styles.page,
-                  currentPage === i ? styles.current : ""
-                )}
-                key={i + 1}
-              >
-                {i + 1}
+              <li key={i + 1}>
+                <button
+                  onClick={() => changePage(i)}
+                  className={classNames(
+                    styles.page,
+                    currentPage === i ? styles.current : ""
+                  )}
+                >
+                  {i + 1}
+                </button>
               </li>
             );
           })}
@@ -42,7 +43,7 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
         {leftIndex > 0 ? (
           <>
             <li className={styles.page} key={0} onClick={() => changePage(0)}>
-              1
+              <button>1</button>
             </li>
             {leftIndex === 1 ? null : (
               <li key="separatorStart" className={styles.separator}>
@@ -62,7 +63,7 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
               )}
               key={i + 1}
             >
-              {i + 1}
+              <button>{i + 1}</button>
             </li>
           );
         })}
@@ -78,7 +79,7 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
               key={pages.length}
               onClick={() => changePage(pages.length - 1)}
             >
-              {pages.length}
+              <button>{pages.length}</button>
             </li>
           </>
         ) : null}

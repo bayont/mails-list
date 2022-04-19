@@ -6,6 +6,7 @@ import { Logo } from "../Logo/Logo";
 import { createPages } from "../../utils/pages";
 import { Pagination } from "../Pagination/Pagination";
 import { useNavigate, useParams } from "react-router-dom";
+import { SearchBox } from "../SearchBox/SearchBox";
 
 export function MailList() {
   const dateComparer = (m1: Mail, m2: Mail) => {
@@ -13,12 +14,12 @@ export function MailList() {
     const date2 = new Date(m2.sent_date).getTime();
     return date2 - date1;
   };
+  const [mails, setMails] = useState(getAllMails());
+  const [mailsPerPage, setMailsPerPage] = useState(10);
 
   function getAllMails() {
     return mailData.sort(dateComparer);
   }
-  const [mails, setMails] = useState(getAllMails());
-  const [mailsPerPage, setMailsPerPage] = useState(10);
 
   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
     if (mails.length > mailsPerPage) {
@@ -68,16 +69,15 @@ export function MailList() {
     setMails(() => {
       return searchQuery === ""
         ? getAllMails()
-        : getAllMails().filter((m) =>
-            new RegExp(`\\W${searchQuery}\\W`, "i").test(m.subject + m.snippet)
-          );
+        : getAllMails().filter((m) => {
+            return new RegExp(`${searchQuery}`, "i").test(
+              ` ${m.from} ${m.subject}  ${m.snippet} `
+            );
+          });
     });
+    changePage(0);
   }
-  let timeout: NodeJS.Timeout = setTimeout(() => {}, 1000);
-  function onSearchInputChange(searchQuery: string) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => findMails(searchQuery), 100);
-  }
+
   const page = pages[currentPage];
   const unreadCount = mails.filter((m) => m.is_unread === true).length;
 
@@ -90,23 +90,17 @@ export function MailList() {
       </header>
       <div className={styles.flexTable}>
         <div className={styles.topBar}>
-          <div
+          <button
             className={styles.newMessages}
             onClick={() => {
               mails.map((m) => toggleIsRead(m.id, true));
             }}
           >
             {unreadCount} unread mail{unreadCount !== 1 ? "s" : ""}
-          </div>
-          <div className={styles.searchBar}>
-            <input
-              type="text"
-              className={styles.searchInput}
-              onChange={(e) => {
-                onSearchInputChange(e.target.value);
-              }}
-            />
-          </div>
+          </button>
+
+          <SearchBox findMails={findMails} />
+
           <div className={styles.shownMessageCount}>
             {(currentPage + 1) * mailsPerPage + 1 - mailsPerPage}-
             {(currentPage + 1) * mailsPerPage > mails.length

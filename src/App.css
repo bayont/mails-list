@@ -13,3 +13,15 @@ h1,
 h2 {
   text-align: center;
 }
+
+button {
+  border: none;
+  background-color: inherit;
+  appearance: none;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+  color: inherit;
+  padding: inherit;
+}
