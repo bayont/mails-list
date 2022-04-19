@@ -98,16 +98,25 @@ export function MailList() {
           </div>
         </div>
         <ul ref={list} className={styles.list}>
-          {page.map((mail) => {
-            return (
-              <MailListElement
-                key={`${mail.id}`}
-                toggleIsRead={toggleIsRead}
-                isChecked={!mail.is_unread}
-                mail={mail}
-              />
-            );
-          })}
+          {page.length ? (
+            page.map((mail) => {
+              return (
+                <MailListElement
+                  key={`${mail.id}`}
+                  toggleIsRead={toggleIsRead}
+                  isChecked={!mail.is_unread}
+                  mail={mail}
+                />
+              );
+            })
+          ) : (
+            <div className={styles.noMails}>
+              <div className={styles.noMailsContent}>
+                <span className="material-icons">drafts</span>
+                More mails not found!
+              </div>
+            </div>
+          )}
         </ul>
       </div>
       {isPaginationNeeded && (
