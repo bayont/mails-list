@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { usePagination } from "../../hooks/usePagination";
 import { Mail } from "../../mailData";
 import styles from "./Pagination.module.css";
 
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export function Pagination({ pages, changePage, currentPage }: Props) {
+  const pagination = usePagination(currentPage, pages);
   if (pages.length < 10)
     return (
       <>
@@ -32,24 +34,18 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
       </>
     );
 
-  const max = 5;
-  const leftIndex =
-    currentPage - max / 2 > 0 ? Math.ceil(currentPage - max / 2) : 0;
-  const rightIndex = leftIndex + max;
-  const midPages = pages.slice(leftIndex, rightIndex);
-
   return (
     <>
       <ul className={styles.pages}>
-        {leftIndex > 0 ? (
+        {pagination.left > 0 ? (
           <>
             <li className={styles.page} key={0} onClick={() => changePage(0)}>
               <button>1</button>
             </li>
-            {leftIndex !== 1 && <li className={styles.separator}>...</li>}
+            {pagination.left !== 1 && <li className={styles.separator}>...</li>}
           </>
         ) : null}
-        {midPages.map((page, j) => {
+        {pagination.pages.map((page, j) => {
           const i = pages.indexOf(page);
           return (
             <li
@@ -64,9 +60,9 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
             </li>
           );
         })}
-        {rightIndex < pages.length ? (
+        {pagination.right < pages.length ? (
           <>
-            {rightIndex + 1 !== pages.length && (
+            {pagination.right + 1 !== pages.length && (
               <li className={styles.separator}>...</li>
             )}
             <li
