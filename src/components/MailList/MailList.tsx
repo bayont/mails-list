@@ -1,4 +1,4 @@
-import { Mail, mailData } from "../../mailData";
+import { Mail } from "../../mailData";
 import { MailListElement } from "../MailListElement/MailListElement";
 import styles from "./MailList.module.css";
 import { useEffect, useRef, useState } from "react";
@@ -39,7 +39,7 @@ export function MailList() {
 
   function toggleIsRead(id: number, mark?: boolean) {
     const clickedElementIndex = mails.findIndex((mail) => mail.id === id);
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       setMails((old) => {
         const clickedElement = old[clickedElementIndex];
         clickedElement.is_unread = mark ? false : !clickedElement.is_unread;
