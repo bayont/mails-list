@@ -52,29 +52,11 @@ export function MailList() {
                {page.length ? (
                   page.map((mail) => {
                      return (
-<<<<<<< HEAD
-                        <MailListElement
-                           key={`${mail.id}`}
-                           toggleIsRead={toggleIsRead}
-                           isChecked={!mail.is_unread}
-                           mail={mail}
-                        />
-                     );
-                  })
-               ) : (
-                  <div className={styles.noMails}>
-                     <div className={styles.noMailsContent}>
-                        <span className="material-icons">drafts</span>
-                        More mails not found!
-                     </div>
-                  </div>
-=======
                         <MailListElement key={`${mail.id}`} mailID={mail.id} />
                      );
                   })
                ) : (
                   <NoMoreMails />
->>>>>>> feature-redux
                )}
             </ul>
          </div>
