@@ -5,16 +5,15 @@ type Props = {
   isChecked: boolean;
   mId: number;
   mIsUnRead: boolean;
-  toggleIsRead: Function;
 };
 
-export function Checkbox({ isChecked, mId, mIsUnRead, toggleIsRead }: Props) {
+export function Checkbox({ isChecked, mId, mIsUnRead }: Props) {
   const id = mId.toString();
   return (
     <div className={styles.checkbox}>
       <input
         type="checkbox"
-        onChange={() => toggleIsRead(mId)}
+        onChange={() => {}}
         onClick={(e) => e.stopPropagation()}
         checked={isChecked}
         name={id}

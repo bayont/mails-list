@@ -2,8 +2,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import { mailData } from "../../mailData";
 import { Logo } from "../Logo/Logo";
 import styles from "./MailDetails.module.css";
+import {
+  useAppSelector,
+  useAppDispatch,
+  markMailAsRead,
+} from "../../utils/store";
+import { useEffect } from "react";
 
 export function MailDetails() {
+  const mails = useAppSelector((state) => state.mails);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(markMailAsRead(mail));
+  }, []);
+
   const { mailId } = useParams();
   const navigate = useNavigate();
   if (mailId === undefined || mailId === "") {
@@ -13,7 +25,8 @@ export function MailDetails() {
   if (mailArray.length < 1) {
     return <>Mail not found!</>;
   }
-  const mail = mailArray[0];
+
+  const mail = mails.filter((m) => m.id === Number(mailId))[0];
 
   return (
     <>
