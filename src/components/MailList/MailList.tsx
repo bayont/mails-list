@@ -1,123 +1,119 @@
-import { Mail } from "../../mailData";
-import { MailListElement } from "../MailListElement/MailListElement";
-import styles from "./MailList.module.css";
-import { useEffect, useRef, useState } from "react";
-import { Logo } from "../Logo/Logo";
-import { createPages } from "../../utils/pages";
-import { Pagination } from "../Pagination/Pagination";
-import { useNavigate, useParams } from "react-router-dom";
-import { SearchBox } from "../SearchBox/SearchBox";
-import { getAllMails } from "../../utils/mails";
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { Mail } from '../../mailData';
+import { getAllMails } from '../../utils/mails';
+import { createPages } from '../../utils/pages';
 import {
-  useAppSelector,
-  useAppDispatch,
-  markMailAsRead,
-  markAllMailsAsRead,
-  setMails,
-} from "../../utils/store";
+   markAllMailsAsRead,
+   markMailAsRead,
+   setMails,
+   useAppDispatch,
+   useAppSelector,
+} from '../../utils/store';
+import { Logo } from '../Logo/Logo';
+import { MailListElement } from '../MailListElement/MailListElement';
+import { Pagination } from '../Pagination/Pagination';
+import { SearchBox } from '../SearchBox/SearchBox';
+import styles from './MailList.module.css';
 
 export function MailList() {
-  const dispatch = useAppDispatch();
-  const mails = useAppSelector((state) => state.mails);
-  const [mailsPerPage, setMailsPerPage] = useState(10);
+   const dispatch = useAppDispatch();
+   const mails = useAppSelector((state) => state.mails);
+   const [mailsPerPage, setMailsPerPage] = useState(10);
 
-  const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
-    return mails.length > mailsPerPage;
-  });
-  useEffect(() => {
-    setIsPaginationNeeded(mails.length > mailsPerPage);
-    setPages(createPages(mails, mailsPerPage));
-  }, [mails, mailsPerPage]);
+   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
+      return mails.length > mailsPerPage;
+   });
+   useEffect(() => {
+      setIsPaginationNeeded(mails.length > mailsPerPage);
+      setPages(createPages(mails, mailsPerPage));
+   }, [mails, mailsPerPage]);
 
-  const [pages, setPages] = useState<Mail[][]>(
-    createPages(mails, mailsPerPage)
-  );
+   const [pages, setPages] = useState<Mail[][]>(
+      createPages(mails, mailsPerPage),
+   );
 
-  const navigate = useNavigate();
-  const { pageId } = useParams();
-  const currentPage =
-    pageId == null || isNaN(parseInt(pageId)) || parseInt(pageId) > pages.length
-      ? 0
-      : parseInt(pageId) - 1;
+   const navigate = useNavigate();
+   const { pageId } = useParams();
+   const currentPage =
+      pageId == null ||
+      isNaN(parseInt(pageId)) ||
+      parseInt(pageId) > pages.length
+         ? 0
+         : parseInt(pageId) - 1;
 
-  function changePage(pageIndex: number) {
-    navigate(`/pages/${pageIndex + 1}`);
-  }
+   function changePage(pageIndex: number) {
+      navigate(`/pages/${pageIndex + 1}`);
+   }
 
-  function findMails(searchQuery: string) {
-    const newMails = getAllMails();
-    dispatch(
-      setMails(
-        !searchQuery
-          ? newMails
-          : newMails.filter((m) => {
-              return new RegExp(`${searchQuery}`, "i").test(
-                ` ${m.from} ${m.subject}  ${m.snippet} `
-              );
-            })
-      )
-    );
-    changePage(0);
-  }
+   function findMails(searchQuery: string) {
+      const newMails = getAllMails();
+      dispatch(
+         setMails(
+            !searchQuery
+               ? newMails
+               : newMails.filter((m) => {
+                    return new RegExp(`${searchQuery}`, 'i').test(
+                       ` ${m.from} ${m.subject}  ${m.snippet} `,
+                    );
+                 }),
+         ),
+      );
+      changePage(0);
+   }
 
-  const page = pages[currentPage];
-  const unreadCount = mails.filter((m) => m.is_unread).length;
+   const page = pages[currentPage];
+   const unreadCount = mails.filter((m) => m.is_unread).length;
 
-  const list = useRef<HTMLUListElement>(null);
+   const list = useRef<HTMLUListElement>(null);
 
-  return (
-    <>
-      <header>
-        <Logo />
-      </header>
-      <div className={styles.flexTable}>
-        <div className={styles.topBar}>
-          <button
-            className={styles.newMessages}
-            onClick={() => dispatch(markAllMailsAsRead)}
-          >
-            {unreadCount} unread mail{unreadCount !== 1 ? "s" : ""}
-          </button>
+   return (
+      <>
+         <header>
+            <Logo />
+         </header>
+         <div className={styles.flexTable}>
+            <div className={styles.topBar}>
+               <button
+                  className={styles.newMessages}
+                  onClick={() => dispatch(markAllMailsAsRead)}
+               >
+                  {unreadCount} unread mail{unreadCount !== 1 ? 's' : ''}
+               </button>
 
-          <SearchBox findMails={findMails} />
+               <SearchBox findMails={findMails} />
 
-          <div className={styles.shownMessageCount}>
-            {(currentPage + 1) * mailsPerPage + 1 - mailsPerPage}-
-            {(currentPage + 1) * mailsPerPage > mails.length
-              ? mails.length
-              : (currentPage + 1) * mailsPerPage}{" "}
-            of {mails.length}
-          </div>
-        </div>
-        <ul ref={list} className={styles.list}>
-          {page.length ? (
-            page.map((mail) => {
-              return (
-                <MailListElement
-                  key={`${mail.id}`}
-                  isChecked={!mail.is_unread}
-                  mail={mail}
-                />
-              );
-            })
-          ) : (
-            <div className={styles.noMails}>
-              <div className={styles.noMailsContent}>
-                <span className="material-icons">drafts</span>
-                More mails not found!
-              </div>
+               <div className={styles.shownMessageCount}>
+                  {(currentPage + 1) * mailsPerPage + 1 - mailsPerPage}-
+                  {(currentPage + 1) * mailsPerPage > mails.length
+                     ? mails.length
+                     : (currentPage + 1) * mailsPerPage}{' '}
+                  of {mails.length}
+               </div>
             </div>
-          )}
-        </ul>
-      </div>
-      {isPaginationNeeded && (
-        <Pagination
-          currentPage={currentPage}
-          changePage={changePage}
-          pages={pages}
-        />
-      )}
-    </>
-  );
+            <ul ref={list} className={styles.list}>
+               {page.length ? (
+                  page.map((mail) => {
+                     return <MailListElement key={`${mail.id}`} mail={mail} />;
+                  })
+               ) : (
+                  <div className={styles.noMails}>
+                     <div className={styles.noMailsContent}>
+                        <span className="material-icons">drafts</span>
+                        More mails not found!
+                     </div>
+                  </div>
+               )}
+            </ul>
+         </div>
+         {isPaginationNeeded && (
+            <Pagination
+               currentPage={currentPage}
+               changePage={changePage}
+               pages={pages}
+            />
+         )}
+      </>
+   );
 }
