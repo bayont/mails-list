@@ -1,17 +1,17 @@
 import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { createPages } from '../../utils/pages';
+import { createPages, getMailsCountFormatted } from '../../utils/pages';
 import {
    markAllMailsAsRead,
    useAppDispatch,
    useAppSelector,
 } from '../../utils/store';
-import { Logo } from '../Logo/Logo';
 import { MailListElement } from '../MailListElement/MailListElement';
 import { NoMoreMails } from '../NoMoreMails/NoMoreMails';
 import { Pagination } from '../Pagination/Pagination';
 import { SearchBox } from '../SearchBox/SearchBox';
+import { UnreadButton } from '../UnreadButton/UnreadButton';
 import styles from './MailList.module.css';
 
 export function MailList() {
@@ -36,7 +36,11 @@ export function MailList() {
          ? 0
          : parseInt(pageId) - 1;
    const page = pages[currentPage];
-   const unreadCount = mails.filter((m) => m.is_unread).length;
+   const countFormatted = getMailsCountFormatted(
+      currentPage,
+      mailsPerPage,
+      mails.length,
+   );
 
    function changePage(pageIndex: number) {
       navigate(`/pages/${pageIndex + 1}`);
@@ -46,22 +50,9 @@ export function MailList() {
       <>
          <div className={styles.flexTable}>
             <div className={styles.topBar}>
-               <button
-                  className={styles.newMessages}
-                  onClick={() => dispatch(markAllMailsAsRead)}
-               >
-                  {unreadCount} unread mail{unreadCount !== 1 ? 's' : ''}
-               </button>
-
+               <UnreadButton />
                <SearchBox />
-
-               <div className={styles.shownMessageCount}>
-                  {(currentPage + 1) * mailsPerPage + 1 - mailsPerPage}-
-                  {(currentPage + 1) * mailsPerPage > mails.length
-                     ? mails.length
-                     : (currentPage + 1) * mailsPerPage}{' '}
-                  of {mails.length}
-               </div>
+               <div className={styles.shownMessageCount}>{countFormatted}</div>
             </div>
             <ul ref={list} className={styles.list}>
                {page.length ? (

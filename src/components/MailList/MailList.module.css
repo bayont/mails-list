@@ -21,41 +21,6 @@
    align-items: center;
 }
 
-.newMessages {
-   position: relative;
-   padding: 5px 10px;
-   background-color: #fefefe;
-   border: 1px solid #ccc;
-   border-radius: 50px;
-   cursor: pointer;
-   transition: background-color 0.3s;
-}
-.newMessages:hover {
-   background-color: rgb(11, 158, 255);
-   border-color: rgb(11, 158, 255);
-   color: white;
-}
-.newMessages:active {
-   background-color: rgb(156, 214, 252);
-}
-
-.newMessages::after {
-   opacity: 0;
-   content: 'Mark all as unread';
-   position: absolute;
-   text-align: center;
-   font-size: small;
-   width: 100%;
-   left: 0;
-   top: -20%;
-   transition: opacity 0.1s linear, transform 0.1s linear;
-   color: #333;
-}
-.newMessages:hover::after {
-   opacity: 1;
-   transform: translateY(-60%);
-}
-
 @media screen and (max-width: 1000px) {
    .flexTable {
       width: 100%;
