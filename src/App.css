@@ -1,27 +1,27 @@
 a {
-  text-decoration: none;
-  color: #333;
+   text-decoration: none;
+   color: #333;
 }
 
 ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+   list-style: none;
+   margin: 0;
+   padding: 0;
 }
 
 h1,
 h2 {
-  text-align: center;
+   text-align: center;
 }
 
 button {
-  border: none;
-  background-color: inherit;
-  appearance: none;
-  font-size: inherit;
-  font-style: inherit;
-  font-weight: inherit;
-  cursor: pointer;
-  color: inherit;
-  padding: inherit;
+   border: none;
+   background-color: inherit;
+   appearance: none;
+   font-size: inherit;
+   font-style: inherit;
+   font-weight: inherit;
+   cursor: pointer;
+   color: inherit;
+   padding: inherit;
 }

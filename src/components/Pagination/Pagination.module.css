@@ -1,48 +1,48 @@
 .pages {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   margin: 20px 0;
 }
 .page {
-  font-family: "Varela Round", sans-serif;
-  width: 40px;
-  height: 40px;
-  background-color: #fefefe;
-  box-shadow: 1px 1px 2px 2px #f1f1f1;
-  border-radius: 10px;
-  margin: 0 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  color: #333;
-  transition: all 0.3s ease-out;
+   font-family: 'Varela Round', sans-serif;
+   width: 40px;
+   height: 40px;
+   background-color: #fefefe;
+   box-shadow: 1px 1px 2px 2px #f1f1f1;
+   border-radius: 10px;
+   margin: 0 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+   color: #333;
+   transition: all 0.3s ease-out;
 }
 
 .page:hover {
-  border-radius: 15px;
-  background-color: rgb(140, 187, 218);
-  color: #eee;
+   border-radius: 15px;
+   background-color: rgb(140, 187, 218);
+   color: #eee;
 }
 
 .current {
-  background-color: rgb(11, 158, 255);
-  color: white;
+   background-color: rgb(11, 158, 255);
+   color: white;
 }
 .current:hover {
-  background-color: rgb(11, 158, 255);
-  color: white;
-  cursor: default;
-  border-radius: 10px;
+   background-color: rgb(11, 158, 255);
+   color: white;
+   cursor: default;
+   border-radius: 10px;
 }
 .separator {
-  align-self: center;
-  margin: 0 10px;
-  letter-spacing: 3px;
-  font-size: 22px;
-  transform: translateY(-20%);
-  user-select: none;
+   align-self: center;
+   margin: 0 10px;
+   letter-spacing: 3px;
+   font-size: 22px;
+   transform: translateY(-20%);
+   user-select: none;
 }
 .separator:hover {
 }

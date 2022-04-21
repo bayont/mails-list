@@ -1,15 +1,15 @@
 .mailDetails {
-  text-align: center;
-  width: 100%;
+   text-align: center;
+   width: 100%;
 }
 
 .backButton {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  text-decoration: underline;
-  cursor: pointer;
+   position: absolute;
+   top: 10px;
+   left: 10px;
+   text-decoration: underline;
+   cursor: pointer;
 }
 .backButton:hover {
-  color: rgb(57, 139, 233);
+   color: rgb(57, 139, 233);
 }
