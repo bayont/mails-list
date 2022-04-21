@@ -6,7 +6,6 @@ import './App.css';
 import { Logo } from './components/Logo/Logo';
 import { MailDetails } from './components/MailDetails/MailDetails';
 import { MailList } from './components/MailList/MailList';
-import logo from './logo.svg';
 
 function App() {
    return (

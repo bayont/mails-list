@@ -1,12 +1,8 @@
 import classNames from 'classnames';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { processDate } from '../../utils/dates';
-import {
-   markMailAsRead,
-   useAppDispatch,
-   useAppSelector,
-} from '../../utils/store';
+import { useAppSelector } from '../../utils/store';
 import { Checkbox } from '../Checkbox/Checkbox';
 import styles from './MailListElement.module.css';
 

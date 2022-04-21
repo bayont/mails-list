@@ -1,55 +1,39 @@
-import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
+import { PayloadAction, configureStore, createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import { Mail } from '../mailData';
 import { getAllMails } from './mails';
 
-export const markMailAsRead = createAction<Mail>('mails/markasread');
-export const markMailAsUnread = createAction<Mail>('mails/markasunread');
-export const markAllMailsAsRead = createAction('mails/markallasread');
-export const sortMails = createAction('mails/sortmails');
-export const setMails = createAction<Mail[]>('mails/set');
-export const toggleIsRead = createAction<Mail>('mails/toggle');
-export const searchFor = createAction<string>('mails/search');
-
-export const mailDateComparer = (m1: Mail, m2: Mail) => {
-   const date1 = new Date(m1.sent_date).getTime();
-   const date2 = new Date(m2.sent_date).getTime();
-   return date2 - date1;
-};
 const mails = getAllMails();
 
 const compareIndexes = (state: WritableDraft<Mail[]>, payloadID: number) => {
-   const foundIndex = state.findIndex((mail) => mail.id);
+   const foundIndex = state.findIndex((mail) => mail.id === payloadID);
    return foundIndex >= 0 ? foundIndex : false;
 };
 
-const mailReducer = createReducer(mails, (builder) => {
-   builder
-      .addCase(markMailAsRead, (state, action) => {
+const mailSlicer = createSlice({
+   name: 'mail',
+   initialState: mails,
+   reducers: {
+      markAsRead(state, action: PayloadAction<Mail>) {
          const index = compareIndexes(state, action.payload.id);
-         index && (state[index].is_unread = false);
-      })
-      .addCase(markMailAsUnread, (state, action) => {
+         index === false || (state[index].is_unread = false);
+      },
+      markAsUnread(state, action: PayloadAction<Mail>) {
          const index = compareIndexes(state, action.payload.id);
-         index && (state[index].is_unread = true);
-      })
-      .addCase(markAllMailsAsRead, (state) => {
+         index === false || (state[index].is_unread = false);
+      },
+      markAllAsRead(state) {
          for (const mail of state) {
-            mail.is_unread = true;
+            mail.is_unread = false;
          }
-      })
-      .addCase(toggleIsRead, (state, action) => {
-         const { id } = action.payload;
-         const foundIndex = state.findIndex((mail) => mail.id === id);
-         foundIndex >= 0 &&
-            (state[foundIndex].is_unread = !state[foundIndex].is_unread);
-      })
-      .addCase(setMails, (state, action) => {
-         return action.payload;
-      })
-      .addCase(searchFor, (state, action) => {
+      },
+      toggleRead(state, action: PayloadAction<Mail>) {
+         const index = compareIndexes(state, action.payload.id);
+         index === false || (state[index].is_unread = !state[index].is_unread);
+      },
+      search(state, action: PayloadAction<string>) {
          const query = action.payload;
          return query !== ''
             ? state.filter((m) => {
@@ -58,12 +42,16 @@ const mailReducer = createReducer(mails, (builder) => {
                  );
               })
             : mails;
-      });
+      },
+   },
 });
+
+export const { markAsRead, markAsUnread, markAllAsRead, toggleRead, search } =
+   mailSlicer.actions;
 
 export const store = configureStore({
    reducer: {
-      mails: mailReducer,
+      mails: mailSlicer.reducer,
    },
 });
 

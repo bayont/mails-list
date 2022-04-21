@@ -2,32 +2,19 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { mailData } from '../../mailData';
-import {
-   markMailAsRead,
-   useAppDispatch,
-   useAppSelector,
-} from '../../utils/store';
-import { Logo } from '../Logo/Logo';
+import { markAsRead, useAppDispatch } from '../../utils/store';
 import styles from './MailDetails.module.css';
 
 export function MailDetails() {
-   const mails = useAppSelector((state) => state.mails);
    const dispatch = useAppDispatch();
-   useEffect(() => {
-      dispatch(markMailAsRead(mail));
-   }, []);
-
    const { mailId } = useParams();
    const navigate = useNavigate();
-   if (mailId === undefined || mailId === '') {
-      return <>Mail undefined!</>;
-   }
-   const mailArray = mailData.filter((m) => m.id.toString() === mailId);
-   if (mailArray.length < 1) {
-      return <>Mail not found!</>;
-   }
 
-   const mail = mails.filter((m) => m.id === Number(mailId))[0];
+   const mail = mailData.filter((m) => m.id === Number(mailId))[0];
+
+   useEffect(() => {
+      dispatch(markAsRead(mail));
+   }, [dispatch, mail]);
 
    return (
       <>

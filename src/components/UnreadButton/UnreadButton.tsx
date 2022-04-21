@@ -1,5 +1,5 @@
 import {
-   markAllMailsAsRead,
+   markAllAsRead,
    useAppDispatch,
    useAppSelector,
 } from '../../utils/store';
@@ -14,7 +14,7 @@ export function UnreadButton() {
    return (
       <button
          className={styles.newMessages}
-         onClick={() => dispatch(markAllMailsAsRead)}
+         onClick={() => dispatch(markAllAsRead())}
       >
          {unreadCount} unread mail{unreadCount !== 1 ? 's' : ''}
       </button>

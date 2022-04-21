@@ -1,11 +1,7 @@
 import classNames from 'classnames';
 
 import { Mail } from '../../mailData';
-import {
-   toggleIsRead,
-   useAppDispatch,
-   useAppSelector,
-} from '../../utils/store';
+import { toggleRead, useAppDispatch } from '../../utils/store';
 import styles from './Checkbox.module.css';
 
 type Props = {
@@ -21,7 +17,7 @@ export function Checkbox({ mail }: Props) {
          <input
             type="checkbox"
             onChange={() => {
-               dispatch(toggleIsRead(mail));
+               dispatch(toggleRead(mail));
             }}
             onClick={(e) => e.stopPropagation()}
             checked={mail.is_unread}

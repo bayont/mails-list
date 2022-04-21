@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from 'react';
 
-import { searchFor, useAppDispatch } from '../../utils/store';
+import { search, useAppDispatch } from '../../utils/store';
 import styles from './SearchBox.module.css';
 
 export function SearchBox() {
@@ -12,13 +12,13 @@ export function SearchBox() {
    function onSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
       clearTimeout(timeout);
       timeout = setTimeout(
-         () => dispatch(searchFor(searchInput.current?.value || '')),
+         () => dispatch(search(searchInput.current?.value || '')),
          100,
       );
    }
 
    function onClearButtonClick() {
-      dispatch(searchFor(''));
+      dispatch(search(''));
       console.log('dispatch');
       if (searchInput.current == null) return;
       searchInput.current.value = '';

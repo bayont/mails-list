@@ -2,11 +2,7 @@ import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { createPages, getMailsCountFormatted } from '../../utils/pages';
-import {
-   markAllMailsAsRead,
-   useAppDispatch,
-   useAppSelector,
-} from '../../utils/store';
+import { useAppSelector } from '../../utils/store';
 import { MailListElement } from '../MailListElement/MailListElement';
 import { NoMoreMails } from '../NoMoreMails/NoMoreMails';
 import { Pagination } from '../Pagination/Pagination';
@@ -14,12 +10,15 @@ import { SearchBox } from '../SearchBox/SearchBox';
 import { UnreadButton } from '../UnreadButton/UnreadButton';
 import styles from './MailList.module.css';
 
+type Params = {
+   pageId: string;
+};
+
 export function MailList() {
-   const { pageId } = useParams();
+   const { pageId } = useParams<Params>();
    const list = useRef<HTMLUListElement>(null);
 
    const navigate = useNavigate();
-   const dispatch = useAppDispatch();
 
    const mails = useAppSelector(
       (state) => state.mails,
@@ -29,12 +28,7 @@ export function MailList() {
    const mailsPerPage = 10;
    const isPaginationNeeded = mails.length > mailsPerPage;
    const pages = createPages(mails, mailsPerPage);
-   const currentPage =
-      pageId == null ||
-      isNaN(parseInt(pageId)) ||
-      parseInt(pageId) > pages.length
-         ? 0
-         : parseInt(pageId) - 1;
+   const currentPage = Number(pageId) > pages.length ? 0 : Number(pageId) - 1;
    const page = pages[currentPage];
    const countFormatted = getMailsCountFormatted(
       currentPage,
