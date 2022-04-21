@@ -19,19 +19,19 @@ import {
 
 export function MailList() {
   const dispatch = useAppDispatch();
-  const mails2 = useAppSelector((state) => state.mails);
+  const mails = useAppSelector((state) => state.mails);
   const [mailsPerPage, setMailsPerPage] = useState(10);
 
   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
-    return mails2.length > mailsPerPage;
+    return mails.length > mailsPerPage;
   });
   useEffect(() => {
-    setIsPaginationNeeded(mails2.length > mailsPerPage);
-    setPages(createPages(mails2, mailsPerPage));
-  }, [mails2, mailsPerPage]);
+    setIsPaginationNeeded(mails.length > mailsPerPage);
+    setPages(createPages(mails, mailsPerPage));
+  }, [mails, mailsPerPage]);
 
   const [pages, setPages] = useState<Mail[][]>(
-    createPages(mails2, mailsPerPage)
+    createPages(mails, mailsPerPage)
   );
 
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ export function MailList() {
   }
 
   const page = pages[currentPage];
-  const unreadCount = mails2.filter((m) => m.is_unread).length;
+  const unreadCount = mails.filter((m) => m.is_unread).length;
 
   const list = useRef<HTMLUListElement>(null);
 
@@ -84,10 +84,10 @@ export function MailList() {
 
           <div className={styles.shownMessageCount}>
             {(currentPage + 1) * mailsPerPage + 1 - mailsPerPage}-
-            {(currentPage + 1) * mailsPerPage > mails2.length
-              ? mails2.length
+            {(currentPage + 1) * mailsPerPage > mails.length
+              ? mails.length
               : (currentPage + 1) * mailsPerPage}{" "}
-            of {mails2.length}
+            of {mails.length}
           </div>
         </div>
         <ul ref={list} className={styles.list}>
