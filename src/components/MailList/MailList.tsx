@@ -1,8 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { shallowEqual } from 'react-redux';
+import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Mail } from '../../mailData';
 import { createPages } from '../../utils/pages';
 import {
    markAllMailsAsRead,
@@ -17,26 +15,20 @@ import { SearchBox } from '../SearchBox/SearchBox';
 import styles from './MailList.module.css';
 
 export function MailList() {
+   const { pageId } = useParams();
    const list = useRef<HTMLUListElement>(null);
 
-   const { pageId } = useParams();
    const navigate = useNavigate();
-
    const dispatch = useAppDispatch();
+
    const mails = useAppSelector(
       (state) => state.mails,
-      (mailsA, mailsB) => {
-         return mailsA.length === mailsB.length;
-      },
+      (mailsA, mailsB) => mailsA.length === mailsB.length,
    );
 
-   const [mailsPerPage, setMailsPerPage] = useState(10);
-   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
-      return mails.length > mailsPerPage;
-   });
-   const [pages, setPages] = useState<Mail[][]>(
-      createPages(mails, mailsPerPage),
-   );
+   const mailsPerPage = 10;
+   const isPaginationNeeded = mails.length > mailsPerPage;
+   const pages = createPages(mails, mailsPerPage);
    const currentPage =
       pageId == null ||
       isNaN(parseInt(pageId)) ||
@@ -44,20 +36,11 @@ export function MailList() {
          ? 0
          : parseInt(pageId) - 1;
    const page = pages[currentPage];
-
-   const unreadCount = useMemo<number>(
-      () => mails.filter((m) => m.is_unread).length,
-      [mails],
-   );
+   const unreadCount = mails.filter((m) => m.is_unread).length;
 
    function changePage(pageIndex: number) {
       navigate(`/pages/${pageIndex + 1}`);
    }
-
-   useEffect(() => {
-      setIsPaginationNeeded(mails.length > mailsPerPage);
-      setPages(createPages(mails, mailsPerPage));
-   }, [mails, mailsPerPage]);
 
    return (
       <>

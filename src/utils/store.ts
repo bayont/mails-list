@@ -22,20 +22,18 @@ const mails = getAllMails();
 
 const compareIndexes = (state: WritableDraft<Mail[]>, payloadID: number) => {
    const foundIndex = state.findIndex((mail) => mail.id);
-   return foundIndex > 0;
+   return foundIndex >= 0 ? foundIndex : false;
 };
 
 const mailReducer = createReducer(mails, (builder) => {
    builder
       .addCase(markMailAsRead, (state, action) => {
-         const { id } = action.payload;
-         const foundIndex = state.findIndex((mail) => mail.id === id);
-         foundIndex > 0 && (state[foundIndex].is_unread = false);
+         const index = compareIndexes(state, action.payload.id);
+         index && (state[index].is_unread = false);
       })
       .addCase(markMailAsUnread, (state, action) => {
-         const { id } = action.payload;
-         const foundIndex = state.findIndex((mail) => mail.id === id);
-         foundIndex > 0 && (state[foundIndex].is_unread = true);
+         const index = compareIndexes(state, action.payload.id);
+         index && (state[index].is_unread = true);
       })
       .addCase(markAllMailsAsRead, (state) => {
          for (const mail of state) {
@@ -53,11 +51,13 @@ const mailReducer = createReducer(mails, (builder) => {
       })
       .addCase(searchFor, (state, action) => {
          const query = action.payload;
-         return state.filter((m) => {
-            return new RegExp(`${query}`, 'i').test(
-               ` ${m.from} ${m.subject} ${m.snippet} `,
-            );
-         });
+         return query !== ''
+            ? state.filter((m) => {
+                 return new RegExp(`${query}`, 'i').test(
+                    ` ${m.from} ${m.subject} ${m.snippet} `,
+                 );
+              })
+            : mails;
       });
 });
 

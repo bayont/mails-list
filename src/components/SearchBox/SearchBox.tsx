@@ -18,9 +18,10 @@ export function SearchBox() {
    }
 
    function onClearButtonClick() {
+      dispatch(searchFor(''));
+      console.log('dispatch');
       if (searchInput.current == null) return;
       searchInput.current.value = '';
-      dispatch(searchFor(''));
    }
    return (
       <div className={styles.searchBox}>

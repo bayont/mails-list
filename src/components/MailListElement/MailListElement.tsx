@@ -1,8 +1,6 @@
 import classNames from 'classnames';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useForceUpdate } from '../../hooks/useForceUpdate';
-import { Mail } from '../../mailData';
 import { processDate } from '../../utils/dates';
 import {
    markMailAsRead,
@@ -27,9 +25,6 @@ export function MailListElement({ mailID }: Props) {
          : styles.flexRow,
       styles.button,
    );
-
-   const navigate = useNavigate();
-   const forceUpdate = useForceUpdate();
 
    return (
       <li>
@@ -56,7 +51,7 @@ export function MailListElement({ mailID }: Props) {
                </div>
             </div>
             <div className={classNames(styles.column, styles.cbWrapper)}>
-               <Checkbox mId={mail.id} updateParent={forceUpdate} />
+               <Checkbox mail={mail} />
             </div>
          </Link>
       </li>

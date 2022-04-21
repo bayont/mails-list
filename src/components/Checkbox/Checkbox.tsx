@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 
+import { Mail } from '../../mailData';
 import {
    toggleIsRead,
    useAppDispatch,
@@ -8,15 +9,11 @@ import {
 import styles from './Checkbox.module.css';
 
 type Props = {
-   mId: number;
-   updateParent: Function;
+   mail: Mail;
 };
 
-export function Checkbox({ mId, updateParent }: Props) {
-   const id = mId.toString();
-   const mail = useAppSelector(
-      (state) => state.mails.filter((m) => m.id == mId)[0],
-   );
+export function Checkbox({ mail }: Props) {
+   const id = mail.id.toString();
    const dispatch = useAppDispatch();
 
    return (
@@ -25,7 +22,6 @@ export function Checkbox({ mId, updateParent }: Props) {
             type="checkbox"
             onChange={() => {
                dispatch(toggleIsRead(mail));
-               updateParent(mail.is_unread);
             }}
             onClick={(e) => e.stopPropagation()}
             checked={mail.is_unread}
