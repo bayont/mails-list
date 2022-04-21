@@ -1,35 +1,30 @@
 import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { Mail } from '../../mailData';
 import { processDate } from '../../utils/dates';
+import { useAppSelector } from '../../utils/store';
 import { Checkbox } from '../Checkbox/Checkbox';
 import styles from './MailListElement.module.css';
 
 type Props = {
-   mail: Mail;
-   isChecked: boolean;
-   toggleIsRead: Function;
+   mailID: number;
 };
 
-export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
+export function MailListElement({ mailID }: Props) {
+   const mail = useAppSelector(
+      (state) => state.mails.filter((m) => m.id === mailID)[0],
+   );
+
    const liClasses = classNames(
       mail.is_unread
          ? classNames(styles.flexRow, styles.unread)
          : styles.flexRow,
       styles.button,
    );
-   const navigate = useNavigate();
 
    return (
       <li>
-         <button
-            className={liClasses}
-            onClick={async () => {
-               await toggleIsRead(mail.id, true);
-               navigate(`mails/${mail.id}`);
-            }}
-         >
+         <Link className={liClasses} to={`mails/${mail.id}`}>
             <div key={`${mail.id}`} className={classNames(styles.widthFull)}>
                <div className={styles.flexContent}>
                   <div className={styles.flexInner}>
@@ -52,14 +47,9 @@ export function MailListElement({ mail, isChecked, toggleIsRead }: Props) {
                </div>
             </div>
             <div className={classNames(styles.column, styles.cbWrapper)}>
-               <Checkbox
-                  isChecked={isChecked}
-                  mIsUnRead={mail.is_unread}
-                  mId={mail.id}
-                  toggleIsRead={toggleIsRead}
-               />
+               <Checkbox mail={mail} />
             </div>
-         </button>
+         </Link>
       </li>
    );
 }

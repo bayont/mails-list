@@ -1,112 +1,58 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Mail } from '../../mailData';
-import { getAllMails } from '../../utils/mails';
-import { createPages } from '../../utils/pages';
-import { Logo } from '../Logo/Logo';
+import { createPages, getMailsCountFormatted } from '../../utils/pages';
+import { useAppSelector } from '../../utils/store';
 import { MailListElement } from '../MailListElement/MailListElement';
+import { NoMoreMails } from '../NoMoreMails/NoMoreMails';
 import { Pagination } from '../Pagination/Pagination';
 import { SearchBox } from '../SearchBox/SearchBox';
+import { UnreadButton } from '../UnreadButton/UnreadButton';
 import styles from './MailList.module.css';
 
+type Params = {
+   pageId: string;
+};
+
 export function MailList() {
-   const [mails, setMails] = useState(getAllMails());
-   const [mailsPerPage, setMailsPerPage] = useState(10);
-
-   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
-      return mails.length > mailsPerPage;
-   });
-
-   useEffect(() => {
-      setIsPaginationNeeded(mails.length > mailsPerPage);
-      setPages(createPages(mails, mailsPerPage));
-   }, [mails, mailsPerPage]);
-
-   const [pages, setPages] = useState<Mail[][]>(
-      createPages(mails, mailsPerPage),
-   );
+   const { pageId } = useParams<Params>();
+   const list = useRef<HTMLUListElement>(null);
 
    const navigate = useNavigate();
-   const { pageId } = useParams();
-   const currentPage =
-      pageId == null ||
-      isNaN(parseInt(pageId)) ||
-      parseInt(pageId) > pages.length
-         ? 0
-         : parseInt(pageId) - 1;
+
+   const mails = useAppSelector(
+      (state) => state.mails,
+      (mailsA, mailsB) => mailsA.length === mailsB.length,
+   );
+
+   const mailsPerPage = 10;
+   const isPaginationNeeded = mails.length > mailsPerPage;
+   const pages = createPages(mails, mailsPerPage);
+   const currentPage = Number(pageId) > pages.length ? 0 : Number(pageId) - 1;
+   const page = pages[currentPage];
+   const countFormatted = getMailsCountFormatted(
+      currentPage,
+      mailsPerPage,
+      mails.length,
+   );
 
    function changePage(pageIndex: number) {
       navigate(`/pages/${pageIndex + 1}`);
    }
 
-   function toggleIsRead(id: number, mark?: boolean) {
-      const clickedElementIndex = mails.findIndex((mail) => mail.id === id);
-      return new Promise((res) => {
-         setMails((old) => {
-            const clickedElement = old[clickedElementIndex];
-            clickedElement.is_unread = mark ? false : !clickedElement.is_unread;
-            const newItems = [...old];
-            newItems.splice(clickedElementIndex, 1, clickedElement);
-            return newItems;
-         });
-         res(true);
-      });
-   }
-   function markAllMailsAsRead() {
-      setMails((m) =>
-         m.map((mail) => {
-            mail.is_unread = false;
-            return mail;
-         }),
-      );
-   }
-   function findMails(searchQuery: string) {
-      setMails(() => {
-         return !searchQuery
-            ? getAllMails()
-            : getAllMails().filter((m) => {
-                 return new RegExp(`${searchQuery}`, 'i').test(
-                    ` ${m.from} ${m.subject}  ${m.snippet} `,
-                 );
-              });
-      });
-      changePage(0);
-   }
-
-   const page = pages[currentPage];
-   const unreadCount = mails.filter((m) => m.is_unread).length;
-
-   const list = useRef<HTMLUListElement>(null);
-
    return (
       <>
-         <header>
-            <Logo />
-         </header>
          <div className={styles.flexTable}>
             <div className={styles.topBar}>
-               <button
-                  className={styles.newMessages}
-                  onClick={markAllMailsAsRead}
-               >
-                  {unreadCount} unread mail{unreadCount !== 1 ? 's' : ''}
-               </button>
-
-               <SearchBox findMails={findMails} />
-
-               <div className={styles.shownMessageCount}>
-                  {(currentPage + 1) * mailsPerPage + 1 - mailsPerPage}-
-                  {(currentPage + 1) * mailsPerPage > mails.length
-                     ? mails.length
-                     : (currentPage + 1) * mailsPerPage}{' '}
-                  of {mails.length}
-               </div>
+               <UnreadButton />
+               <SearchBox />
+               <div className={styles.shownMessageCount}>{countFormatted}</div>
             </div>
             <ul ref={list} className={styles.list}>
                {page.length ? (
                   page.map((mail) => {
                      return (
+<<<<<<< HEAD
                         <MailListElement
                            key={`${mail.id}`}
                            toggleIsRead={toggleIsRead}
@@ -122,6 +68,13 @@ export function MailList() {
                         More mails not found!
                      </div>
                   </div>
+=======
+                        <MailListElement key={`${mail.id}`} mailID={mail.id} />
+                     );
+                  })
+               ) : (
+                  <NoMoreMails />
+>>>>>>> feature-redux
                )}
             </ul>
          </div>

@@ -1,26 +1,27 @@
 import { ChangeEvent, useRef } from 'react';
 
+import { search, useAppDispatch } from '../../utils/store';
 import styles from './SearchBox.module.css';
 
-type Props = {
-   findMails: Function;
-};
+export function SearchBox() {
+   const dispatch = useAppDispatch();
 
-export function SearchBox({ findMails }: Props) {
    const searchInput = useRef<HTMLInputElement>(null);
    let timeout: NodeJS.Timeout = setTimeout(() => {}, 1000);
-   function onSearchInputChange(searchQuery: string) {
+
+   function onSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
       clearTimeout(timeout);
-      timeout = setTimeout(() => findMails(searchQuery), 100);
+      timeout = setTimeout(
+         () => dispatch(search(searchInput.current?.value || '')),
+         100,
+      );
    }
-   function onSearchInputChange2(event: ChangeEvent<HTMLInputElement>) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => findMails(event.target.value), 100);
-   }
+
    function onClearButtonClick() {
+      dispatch(search(''));
+      console.log('dispatch');
       if (searchInput.current == null) return;
       searchInput.current.value = '';
-      onSearchInputChange('');
    }
    return (
       <div className={styles.searchBox}>
@@ -34,7 +35,7 @@ export function SearchBox({ findMails }: Props) {
                className={styles.searchInput}
                placeholder="Search for mails..."
                spellCheck={false}
-               onChange={onSearchInputChange2}
+               onChange={onSearchInputChange}
             />
          </div>
          <button className={styles.clearInput} onClick={onClearButtonClick}>

@@ -1,34 +1,37 @@
 import classNames from 'classnames';
 
+import { Mail } from '../../mailData';
+import { toggleRead, useAppDispatch } from '../../utils/store';
 import styles from './Checkbox.module.css';
 
 type Props = {
-   isChecked: boolean;
-   mId: number;
-   mIsUnRead: boolean;
-   toggleIsRead: Function;
+   mail: Mail;
 };
 
-export function Checkbox({ isChecked, mId, mIsUnRead, toggleIsRead }: Props) {
-   const id = mId.toString();
+export function Checkbox({ mail }: Props) {
+   const id = mail.id.toString();
+   const dispatch = useAppDispatch();
+
    return (
       <div className={styles.checkbox}>
          <input
             type="checkbox"
-            onChange={() => toggleIsRead(mId)}
+            onChange={() => {
+               dispatch(toggleRead(mail));
+            }}
             onClick={(e) => e.stopPropagation()}
-            checked={isChecked}
+            checked={mail.is_unread}
             name={id}
             id={id}
             className={styles.cb}
          />
          <span className={classNames(`material-icons`, styles.icon)}>
-            {!mIsUnRead ? 'mark_email_read' : 'markunread'}
+            {!mail.is_unread ? 'mark_email_read' : 'markunread'}
          </span>
          <div className={styles.hint}>
             <div className={styles.arrow}></div>
             <div className={styles.hintBox}>
-               Mark as {mIsUnRead ? 'R' : 'Unr'}ead
+               Mark as {mail.is_unread ? 'R' : 'Unr'}ead
             </div>
          </div>
       </div>

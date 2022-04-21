@@ -1,26 +1,24 @@
+
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { mailData } from '../../mailData';
-import { Logo } from '../Logo/Logo';
+import { markAsRead, useAppDispatch } from '../../utils/store';
 import styles from './MailDetails.module.css';
 
 export function MailDetails() {
+   const dispatch = useAppDispatch();
    const { mailId } = useParams();
    const navigate = useNavigate();
-   if (mailId === undefined || mailId === '') {
-      return <>Mail undefined!</>;
-   }
-   const mailArray = mailData.filter((m) => m.id.toString() === mailId);
-   if (mailArray.length < 1) {
-      return <>Mail not found!</>;
-   }
-   const mail = mailArray[0];
+
+   const mail = mailData.filter((m) => m.id === Number(mailId))[0];
+
+   useEffect(() => {
+      dispatch(markAsRead(mail));
+   }, [dispatch, mail]);
 
    return (
       <>
-         <header>
-            <Logo />
-         </header>
          <div className={styles.backButton}>
             <div
                onClick={() => {
