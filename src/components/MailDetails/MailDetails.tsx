@@ -31,9 +31,6 @@ export function MailDetails() {
 
    return (
       <>
-         <header>
-            <Logo />
-         </header>
          <div className={styles.backButton}>
             <div
                onClick={() => {

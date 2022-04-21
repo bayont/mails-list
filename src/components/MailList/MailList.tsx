@@ -44,9 +44,6 @@ export function MailList() {
 
    return (
       <>
-         <header>
-            <Logo />
-         </header>
          <div className={styles.flexTable}>
             <div className={styles.topBar}>
                <button
