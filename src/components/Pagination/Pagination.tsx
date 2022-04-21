@@ -12,33 +12,29 @@ type Props = {
 
 export function Pagination({ pages, changePage, currentPage }: Props) {
    const pagination = usePagination(currentPage, pages);
-   if (pages.length < 10)
-      return (
-         <>
-            <ul className={styles.pages}>
-               {pages.map((page, i) => {
-                  return (
-                     <li key={i + 1}>
-                        <button
-                           onClick={() => changePage(i)}
-                           className={classNames(
-                              styles.page,
-                              currentPage === i ? styles.current : '',
-                           )}
-                        >
-                           {i + 1}
-                        </button>
-                     </li>
-                  );
-               })}
-            </ul>
-         </>
-      );
 
-   return (
+   return pages.length < 10 ? (
       <>
          <ul className={styles.pages}>
-            {pagination.left > 0 ? (
+            {pages.map((page, i) => (
+               <li key={i + 1}>
+                  <button
+                     onClick={() => changePage(i)}
+                     className={classNames(
+                        styles.page,
+                        currentPage === i ? styles.current : '',
+                     )}
+                  >
+                     {i + 1}
+                  </button>
+               </li>
+            ))}
+         </ul>
+      </>
+   ) : (
+      <>
+         <ul className={styles.pages}>
+            {pagination.left > 0 && (
                <>
                   <li
                      className={styles.page}
@@ -51,9 +47,10 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
                      <li className={styles.separator}>...</li>
                   )}
                </>
-            ) : null}
-            {pagination.pages.map((page, j) => {
+            )}
+            {pagination.pages.map((page) => {
                const i = pages.indexOf(page);
+
                return (
                   <li
                      onClick={() => changePage(i)}
@@ -67,7 +64,7 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
                   </li>
                );
             })}
-            {pagination.right < pages.length ? (
+            {pagination.right < pages.length && (
                <>
                   {pagination.right + 1 !== pages.length && (
                      <li className={styles.separator}>...</li>
@@ -80,7 +77,7 @@ export function Pagination({ pages, changePage, currentPage }: Props) {
                      <button>{pages.length}</button>
                   </li>
                </>
-            ) : null}
+            )}
          </ul>
       </>
    );

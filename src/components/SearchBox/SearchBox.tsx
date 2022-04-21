@@ -5,8 +5,8 @@ import styles from './SearchBox.module.css';
 
 export function SearchBox() {
    const dispatch = useAppDispatch();
-
    const searchInput = useRef<HTMLInputElement>(null);
+
    let timeout: NodeJS.Timeout = setTimeout(() => {}, 1000);
 
    function onSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -19,10 +19,9 @@ export function SearchBox() {
 
    function onClearButtonClick() {
       dispatch(search(''));
-      console.log('dispatch');
-      if (searchInput.current == null) return;
-      searchInput.current.value = '';
+      if (searchInput.current !== null) searchInput.current.value = '';
    }
+
    return (
       <div className={styles.searchBox}>
          <div className={styles.searchIcon}>
