@@ -25,7 +25,6 @@ export function MailList() {
   const [isPaginationNeeded, setIsPaginationNeeded] = useState(() => {
     return mails2.length > mailsPerPage;
   });
-
   useEffect(() => {
     setIsPaginationNeeded(mails2.length > mailsPerPage);
     setPages(createPages(mails2, mailsPerPage));
@@ -48,14 +47,17 @@ export function MailList() {
 
   function findMails(searchQuery: string) {
     const newMails = getAllMails();
-    !searchQuery
-      ? getAllMails()
-      : getAllMails().filter((m) => {
-          return new RegExp(`${searchQuery}`, "i").test(
-            ` ${m.from} ${m.subject}  ${m.snippet} `
-          );
-        });
-    dispatch(setMails(newMails));
+    dispatch(
+      setMails(
+        !searchQuery
+          ? newMails
+          : newMails.filter((m) => {
+              return new RegExp(`${searchQuery}`, "i").test(
+                ` ${m.from} ${m.subject}  ${m.snippet} `
+              );
+            })
+      )
+    );
     changePage(0);
   }
 

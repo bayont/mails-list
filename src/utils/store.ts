@@ -6,7 +6,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { Mail, mailData } from "../mailData";
+import { Mail } from "../mailData";
 import { getAllMails } from "./mails";
 
 export const markMailAsRead = createAction<Mail>("mails/markasread");
@@ -20,12 +20,10 @@ export const mailDateComparer = (m1: Mail, m2: Mail) => {
   const date2 = new Date(m2.sent_date).getTime();
   return date2 - date1;
 };
+const mails = getAllMails();
 
-const mailReducer = createReducer(mailData, (builder) => {
+const mailReducer = createReducer(mails, (builder) => {
   builder
-    .addCase(sortMails, (state) => {
-      state.sort(mailDateComparer);
-    })
     .addCase(markMailAsRead, (state, action) => {
       const { id } = action.payload;
       const foundIndex = state.findIndex((mail) => mail.id === id);
@@ -42,10 +40,7 @@ const mailReducer = createReducer(mailData, (builder) => {
       }
     })
     .addCase(setMails, (state, action) => {
-      state = action.payload;
-    })
-    .addDefaultCase((state) => {
-      state = getAllMails();
+      return action.payload;
     });
 });
 

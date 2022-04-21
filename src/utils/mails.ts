@@ -7,5 +7,5 @@ export const mailDateComparer = (m1: Mail, m2: Mail) => {
 };
 
 export function getAllMails() {
-  return mailData;
+  return mailData.sort(mailDateComparer);
 }
