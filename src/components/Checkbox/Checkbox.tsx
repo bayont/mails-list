@@ -9,9 +9,10 @@ import styles from './Checkbox.module.css';
 
 type Props = {
    mId: number;
+   updateParent: Function;
 };
 
-export function Checkbox({ mId }: Props) {
+export function Checkbox({ mId, updateParent }: Props) {
    const id = mId.toString();
    const mail = useAppSelector(
       (state) => state.mails.filter((m) => m.id == mId)[0],
@@ -24,6 +25,7 @@ export function Checkbox({ mId }: Props) {
             type="checkbox"
             onChange={() => {
                dispatch(toggleIsRead(mail));
+               updateParent(mail.is_unread);
             }}
             onClick={(e) => e.stopPropagation()}
             checked={mail.is_unread}

@@ -1,0 +1,18 @@
+.noMails {
+   width: 100%;
+   height: 300px;
+   display: grid;
+   place-items: center;
+}
+
+.noMailsContent {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-size: 10px;
+   color: #777;
+}
+
+.noMailsContent > span {
+   font-size: 40px;
+}

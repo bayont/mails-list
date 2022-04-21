@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useForceUpdate } from '../../hooks/useForceUpdate';
 import { Mail } from '../../mailData';
 import { processDate } from '../../utils/dates';
 import {
@@ -12,17 +13,23 @@ import { Checkbox } from '../Checkbox/Checkbox';
 import styles from './MailListElement.module.css';
 
 type Props = {
-   mail: Mail;
+   mailID: number;
 };
 
-export function MailListElement({ mail }: Props) {
+export function MailListElement({ mailID }: Props) {
+   const mail = useAppSelector(
+      (state) => state.mails.filter((m) => m.id === mailID)[0],
+   );
+
    const liClasses = classNames(
       mail.is_unread
          ? classNames(styles.flexRow, styles.unread)
          : styles.flexRow,
       styles.button,
    );
+
    const navigate = useNavigate();
+   const forceUpdate = useForceUpdate();
 
    return (
       <li>
@@ -49,7 +56,7 @@ export function MailListElement({ mail }: Props) {
                </div>
             </div>
             <div className={classNames(styles.column, styles.cbWrapper)}>
-               <Checkbox mId={mail.id} />
+               <Checkbox mId={mail.id} updateParent={forceUpdate} />
             </div>
          </Link>
       </li>

@@ -11,6 +11,7 @@ export const markAllMailsAsRead = createAction('mails/markallasread');
 export const sortMails = createAction('mails/sortmails');
 export const setMails = createAction<Mail[]>('mails/set');
 export const toggleIsRead = createAction<Mail>('mails/toggle');
+export const searchFor = createAction<string>('mails/search');
 
 export const mailDateComparer = (m1: Mail, m2: Mail) => {
    const date1 = new Date(m1.sent_date).getTime();
@@ -44,10 +45,19 @@ const mailReducer = createReducer(mails, (builder) => {
       .addCase(toggleIsRead, (state, action) => {
          const { id } = action.payload;
          const foundIndex = state.findIndex((mail) => mail.id === id);
-         foundIndex > 0 && (state[foundIndex].is_unread = true);
+         foundIndex >= 0 &&
+            (state[foundIndex].is_unread = !state[foundIndex].is_unread);
       })
       .addCase(setMails, (state, action) => {
          return action.payload;
+      })
+      .addCase(searchFor, (state, action) => {
+         const query = action.payload;
+         return state.filter((m) => {
+            return new RegExp(`${query}`, 'i').test(
+               ` ${m.from} ${m.subject} ${m.snippet} `,
+            );
+         });
       });
 });
 
