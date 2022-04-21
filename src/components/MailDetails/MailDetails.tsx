@@ -1,5 +1,4 @@
-
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { mailData } from '../../mailData';
@@ -11,7 +10,10 @@ export function MailDetails() {
    const { mailId } = useParams();
    const navigate = useNavigate();
 
-   const mail = mailData.filter((m) => m.id === Number(mailId))[0];
+   const mail = useMemo(
+      () => mailData.filter((m) => m.id === Number(mailId))[0],
+      [mailId],
+   );
 
    useEffect(() => {
       dispatch(markAsRead(mail));

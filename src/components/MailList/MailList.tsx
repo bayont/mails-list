@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { createPages, getMailsCountFormatted } from '../../utils/pages';
@@ -36,9 +36,12 @@ export function MailList() {
       mails.length,
    );
 
-   function changePage(pageIndex: number) {
-      navigate(`/pages/${pageIndex + 1}`);
-   }
+   const changePage = useCallback(
+      (pageIndex: number) => {
+         navigate(`/pages/${pageIndex + 1}`);
+      },
+      [navigate],
+   );
 
    return (
       <>
