@@ -28,7 +28,10 @@ export function MailList() {
    const mailsPerPage = 10;
    const isPaginationNeeded = mails.length > mailsPerPage;
    const pages = createPages(mails, mailsPerPage);
-   const currentPage = Number(pageId) > pages.length ? 0 : Number(pageId) - 1;
+   const currentPage =
+      isNaN(Number(pageId)) || Number(pageId) > pages.length
+         ? 0
+         : Number(pageId) - 1;
    const page = pages[currentPage];
    const countFormatted = getMailsCountFormatted(
       currentPage,

@@ -16,5 +16,6 @@ export function usePagination(
       currentPage - max / 2 > 0 ? Math.ceil(currentPage - max / 2) : 0;
    const right = left + max;
    const midPages = pages.slice(left, right);
+
    return { left, right, pages: midPages };
 }
